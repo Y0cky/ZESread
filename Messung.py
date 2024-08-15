@@ -3,8 +3,8 @@ import time
 
 def main():
     # Überprüfen der Anzahl der Übergabeparameter
-    if len(sys.argv) != 3:
-        print("Usage: Messung.py <Dateiname> <Anzahl>")
+    if len(sys.argv) < 3 or len(sys.argv) > 4:
+        print("Usage: Messung.py <Dateiname> <Anzahl> [<Einstellzeit>]")
         sys.exit(1)
 
     # Dateiname und Anzahl der Messungen aus Übergabeparametern extrahieren
@@ -15,15 +15,25 @@ def main():
         print("Die Anzahl der Messungen muss eine Ganzzahl sein.")
         sys.exit(1)
 
+    # Überprüfen, ob die Einstellzeit als Parameter übergeben wurde
+    if len(sys.argv) == 4:
+        try:
+            delay_time = float(sys.argv[3]) / 1000  # Umrechnung in Sekunden
+        except ValueError:
+            print("Die Einstellzeit muss eine Zahl sein.")
+            sys.exit(1)
+    else:
+        delay_time = 4  # Standardwert von 4 Sekunden
+
     data_file = name + ".txt"
     log = open(data_file, 'w')
     log.close()
     print("Vergangene Werte geloescht")
-    
+
     measurements_received = 0
-    
-    print("Messung startet in 4 sec")
-    time.sleep(4)
+
+    print("Einstellzeit laeuft")
+    time.sleep(delay_time)
 
     while measurements_received < num_measurements:
         try:
@@ -48,7 +58,7 @@ def main():
         # Wartezeit zwischen den Messungen
         time.sleep(0.5)
 
-    print("Messung abgeschlossen. Insgesamt", measurements_received, "Messungen durchgefuehrt und in", data_file, "gespeichert.")
+    print("Messung abgeschlossen. Insgesamt", measurements_received, "Messungen durchgeführt und in", data_file, "gespeichert.")
     
 if __name__ == "__main__":
     main()
