@@ -37,10 +37,10 @@ try:
             f.write(Werte)
             f.close()
             print(Werte)
-            time.sleep(0.5)
+            time.sleep(0.2)
         else:
             print("Keine Messwerte")
-            time.sleep(0.5)
+            time.sleep(0.2)
 finally:
     zes.Write(LMG, "INIT:CONT OFF")
     closez.close(LMG)
